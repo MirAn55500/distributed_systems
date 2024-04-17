@@ -22,9 +22,12 @@ async def do_reliable_request(url: str, observer: ResultsObserver) -> None:
     async with httpx.AsyncClient() as client:
         # YOUR CODE GOES HERE
         for _ in range(5):
-            response = await client.get(url, timeout=3.0)
-            response.raise_for_status()
-            data = response.read()
+            try:
+                response = await client.get(url, timeout=3.0)
+                response.raise_for_status()
+                data = response.read()
 
-            observer.observe(data)
-            return
+                observer.observe(data)
+                return
+            except TimeoutError:
+                print('Error')
