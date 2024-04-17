@@ -1,4 +1,5 @@
 import abc
+import time
 
 import httpx
 
@@ -23,11 +24,13 @@ async def do_reliable_request(url: str, observer: ResultsObserver) -> None:
         # YOUR CODE GOES HERE
         for _ in range(5):
             try:
-                response = await client.get(url, timeout=5.0)
+                response = await client.get(url, timeout=10.0)
                 response.raise_for_status()
                 data = response.read()
 
                 observer.observe(data)
                 return
-            except (httpx.TimeoutException, httpx.RequestError):
-                print('Error')
+            except (httpx.TimeoutException, httpx.NetworkError, httpx.RequestError):
+                time.sleep(1)
+                continue
+        return
