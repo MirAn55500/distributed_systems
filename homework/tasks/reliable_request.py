@@ -29,4 +29,3 @@ async def do_reliable_request(url: str, observer: ResultsObserver) -> None:
 
             observer.observe(data)
             return
-            #####################
