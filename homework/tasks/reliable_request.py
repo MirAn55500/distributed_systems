@@ -1,7 +1,6 @@
 import abc
 
 import httpx
-from httpx import RequestError, TimeoutException
 
 
 class ResultsObserver(abc.ABC):
