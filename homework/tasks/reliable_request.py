@@ -1,6 +1,7 @@
 import abc
 
 import httpx
+from httpx import RequestError, TimeoutException
 
 
 class ResultsObserver(abc.ABC):
@@ -21,10 +22,11 @@ async def do_reliable_request(url: str, observer: ResultsObserver) -> None:
 
     async with httpx.AsyncClient() as client:
         # YOUR CODE GOES HERE
-        response = await client.get(url)
-        response.raise_for_status()
-        data = response.read()
+        for _ in range(5):
+            response = await client.get(url, timeout=3.0)
+            response.raise_for_status()
+            data = response.read()
 
-        observer.observe(data)
-        return
-        #####################
+            observer.observe(data)
+            return
+            #####################
