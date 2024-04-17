@@ -81,4 +81,4 @@ class ItemStorage:
             AND description = $3
         '''
         res = await self._pool.fetch(query, user_id, title, description)
-        return [ItemEntry(row) for row in res]
+        return [ItemEntry(item for item in row) for row in res]
