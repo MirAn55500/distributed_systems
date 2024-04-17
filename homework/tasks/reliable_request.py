@@ -31,3 +31,4 @@ async def do_reliable_request(url: str, observer: ResultsObserver) -> None:
                 return
             except (httpx.TimeoutException, httpx.RequestError):
                 print('Error')
+        raise Exception('Timeout error')
