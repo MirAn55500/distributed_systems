@@ -23,7 +23,7 @@ async def do_reliable_request(url: str, observer: ResultsObserver) -> None:
         # YOUR CODE GOES HERE
         for _ in range(5):
             try:
-                response = await client.get(url, timeout=3.0)
+                response = await client.get(url, timeout=5.0)
                 response.raise_for_status()
                 data = response.read()
 
@@ -31,4 +31,3 @@ async def do_reliable_request(url: str, observer: ResultsObserver) -> None:
                 return
             except (httpx.TimeoutException, httpx.RequestError):
                 print('Error')
-        raise Exception('Timeout error')
