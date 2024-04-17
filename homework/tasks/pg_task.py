@@ -40,7 +40,7 @@ class ItemStorage:
         # YOUR CODE GOES HERE
         query = '''
         CREATE TABLE items (
-            item_id INT PRIMARY_KEY,
+            item_id INT PRIMARY KEY,
             user_id INT NOT NULL,
             title TEXT NOT NULL,
             description TEXT NOT NULL
@@ -81,4 +81,4 @@ class ItemStorage:
             AND description = $3
         '''
         res = await self._pool.fetch(query, user_id, title, description)
-        return [row for row in res]
+        return [ItemEntry(row) for row in res]

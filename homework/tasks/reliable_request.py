@@ -30,7 +30,8 @@ async def do_reliable_request(url: str, observer: ResultsObserver) -> None:
 
                 observer.observe(data)
                 return
-            except (httpx.TimeoutException, httpx.NetworkError, httpx.RequestError):
+            except (httpx.TimeoutException, httpx.NetworkError,
+                    httpx.RequestError, httpx.HTTPStatusError):
                 time.sleep(1)
                 continue
         return
